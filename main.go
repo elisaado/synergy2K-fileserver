@@ -18,8 +18,17 @@ func main() {
 	go refreshVersion()
 	e := echo.New()
 	e.GET("/", func(c echo.Context) error {
-		return c.String(http.StatusOK, "Hello, World!")
+		return c.Redirect(http.StatusMovedPermanently, "https://spark.adobe.com/page/DWWqEQxXZZg8j/")
 	})
+
+	e.GET("/api/version", func(c echo.Context) error {
+		return c.JSON(http.StatusOK, version)
+	})
+	e.GET("/api/filname", func(c echo.Context) error {
+		return c.JSON(http.StatusOK, version+".zip")
+	})
+
+	e.Static("/files", "public")
 	e.Logger.Fatal(e.Start(":1323"))
 }
 
