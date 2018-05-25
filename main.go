@@ -31,7 +31,7 @@ func main() {
 	})
 
 	e.Static("/files", "public")
-	e.Logger.Fatal(e.Start(":1323"))
+	e.Logger.Fatal(e.Start(":8443"))
 }
 
 func refreshVersion() {
