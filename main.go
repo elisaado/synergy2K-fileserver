@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"io/ioutil"
 	"net/http"
+	"os"
 	"path/filepath"
 	"sort"
 	"strconv"
@@ -24,7 +25,7 @@ func main() {
 	e.GET("/api/version", func(c echo.Context) error {
 		return c.JSON(http.StatusOK, version)
 	})
-	e.GET("/api/filname", func(c echo.Context) error {
+	e.GET("/api/filename", func(c echo.Context) error {
 		return c.JSON(http.StatusOK, version+".zip")
 	})
 
@@ -39,6 +40,10 @@ func refreshVersion() {
 		if err != nil {
 			fmt.Println("Error reading files", err)
 			return
+		}
+		if len(files) < 1 {
+			fmt.Println("No files present")
+			os.Exit(1)
 		}
 		sort.Slice(files, func(i, j int) bool {
 			iname := files[i].Name()
