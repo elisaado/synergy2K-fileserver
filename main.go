@@ -14,6 +14,7 @@ import (
 )
 
 var version string
+var filename string
 
 func main() {
 	go refreshVersion()
@@ -26,7 +27,7 @@ func main() {
 		return c.JSON(http.StatusOK, version)
 	})
 	e.GET("/api/filename", func(c echo.Context) error {
-		return c.JSON(http.StatusOK, version+".zip")
+		return c.JSON(http.StatusOK, filename)
 	})
 
 	e.Static("/files", "public")
@@ -60,8 +61,8 @@ func refreshVersion() {
 			}
 			return iver > jver
 		})
-		latest := files[0].Name()
-		version = latest[0 : len(latest)-len(filepath.Ext(latest))]
+		filename = files[0].Name()
+		version = filename[0 : len(filename)-len(filepath.Ext(filename))]
 
 		time.Sleep(time.Second * 120)
 	}
