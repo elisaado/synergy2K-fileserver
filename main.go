@@ -55,7 +55,7 @@ func refreshVersion() {
 			}
 			return iver > jver
 		})
-		latest = files[0].Name()
+		latest := files[0].Name()
 		version = latest[0 : len(latest)-len(filepath.Ext(latest))]
 
 		time.Sleep(time.Second * 120)
